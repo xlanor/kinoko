@@ -16,5 +16,8 @@ public final class ServerConstants {
 
     public static final String DATABASE_HOST = Util.getEnv("DATABASE_HOST", "127.0.0.1");
     public static final int DATABASE_PORT = 9042;
+    public static final String DATABASE_USERNAME = Util.getEnv("DATABASE_USERNAME", "");
+    public static final String DATABASE_PASSWORD = Util.getEnv("DATABASE_PASSWORD", "");
+    public static final String DATABASE_DATACENTER = Util.getEnv("DATABASE_DATACENTER", "datacenter1");
 }
 

@@ -16,6 +16,7 @@ import kinoko.provider.skill.ElementAttribute;
 import kinoko.provider.skill.SkillInfo;
 import kinoko.provider.skill.SkillStat;
 import kinoko.script.party.HenesysPQ;
+import kinoko.server.ServerConfig;
 import kinoko.server.node.ServerExecutor;
 import kinoko.server.packet.OutPacket;
 import kinoko.util.BitFlag;
@@ -201,11 +202,12 @@ public final class Mob extends Life implements ControlledObject, Encodable {
     }
 
     public int getExp() {
+        double exp = template.getExp() * ServerConfig.EXP_RATE;
         if (getMobStat().hasOption(MobTemporaryStat.Showdown)) {
             final double multiplier = (getMobStat().getOption(MobTemporaryStat.Showdown).nOption + 100) / 100.0;
-            return (int) (template.getExp() * multiplier);
+            exp *= multiplier;
         }
-        return template.getExp();
+        return (int) exp;
     }
 
     public boolean isSlowUsed() {
@@ -569,7 +571,7 @@ public final class Mob extends Life implements ControlledObject, Encodable {
             return Optional.empty();
         }
         // Drop probability
-        double probability = reward.getProb();
+        double probability = reward.getProb() * ServerConfig.DROP_RATE;
         if (owner.getSecondaryStat().hasOption(CharacterTemporaryStat.ItemUpByItem)) {
             final double multiplier = (owner.getSecondaryStat().getOption(CharacterTemporaryStat.ItemUpByItem).nOption + 100) / 100.0;
             probability = probability * multiplier;
@@ -583,7 +585,7 @@ public final class Mob extends Life implements ControlledObject, Encodable {
         }
         // Create drop
         if (reward.isMoney()) {
-            int money = Util.getRandom(reward.getMin(), reward.getMax());
+            int money = (int) (Util.getRandom(reward.getMin(), reward.getMax()) * ServerConfig.MESO_RATE);
             if (money <= 0) {
                 return Optional.empty();
             }

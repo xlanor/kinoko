@@ -28,6 +28,11 @@ public final class Util {
         return value != null ? Boolean.parseBoolean(value) : defaultValue;
     }
 
+    public static double getEnv(String name, double defaultValue) {
+        final String value = System.getenv(name);
+        return value != null ? Double.parseDouble(value) : defaultValue;
+    }
+
     public static byte[] getHost(String name) {
         try {
             return InetAddress.getByName(name).getAddress();

@@ -25,6 +25,10 @@ public final class ServerConfig {
     public static final int ITEM_EXPIRE_INTERVAL = 60; // 180 seconds in BMS
     public static final int WORLD_SPEAKER_COOLTIME = 60;
 
+    public static final double EXP_RATE = Util.getEnv("EXP_RATE", 1.0);
+    public static final double MESO_RATE = Util.getEnv("MESO_RATE", 1.0);
+    public static final double DROP_RATE = Util.getEnv("DROP_RATE", 1.0);
+
     public static final String COMMAND_PREFIX = Util.getEnv("COMMAND_PREFIX", "!");
     public static final boolean DEBUG_MODE = Util.getEnv("DEBUG_MODE", true);
     public static final boolean PLAIN_TRAFFIC = Util.getEnv("PLAIN_TRAFFIC", false);

@@ -38,7 +38,7 @@ import java.util.function.Function;
 
 public final class CassandraConnector implements DatabaseConnector {
     public static final InetSocketAddress DATABASE_ADDRESS = new InetSocketAddress(ServerConstants.DATABASE_HOST, ServerConstants.DATABASE_PORT);
-    public static final String DATABASE_DATACENTER = "datacenter1";
+    public static final String DATABASE_DATACENTER = ServerConstants.DATABASE_DATACENTER;
     public static final String DATABASE_KEYSPACE = "kinoko";
     public static final String PROFILE_ONE = "profile_one";
     private CqlSession cqlSession;
@@ -128,11 +128,14 @@ public final class CassandraConnector implements DatabaseConnector {
                 .endProfile()
                 .build();
         // Create Session
-        cqlSession = new CqlSessionBuilder()
+        final CqlSessionBuilder sessionBuilder = new CqlSessionBuilder()
                 .addContactPoint(DATABASE_ADDRESS)
                 .withLocalDatacenter(DATABASE_DATACENTER)
-                .withConfigLoader(configLoader)
-                .build();
+                .withConfigLoader(configLoader);
+        if (!ServerConstants.DATABASE_USERNAME.isEmpty()) {
+            sessionBuilder.withAuthCredentials(ServerConstants.DATABASE_USERNAME, ServerConstants.DATABASE_PASSWORD);
+        }
+        cqlSession = sessionBuilder.build();
 
         // Create Keyspace
         if (createKeyspace(cqlSession, DATABASE_KEYSPACE)) {
