@@ -95,9 +95,9 @@ public final class GameConstants {
     public static final int MOB_HP_TAG_INTERVAL = 500;
     public static final int MOB_SKILL_COOLTIME = 3;
     public static final int MOB_RECOVER_TIME = 5;
-    public static final int MOB_RESPAWN_TIME = 7;
-    public static final int MOB_CAPACITY_MAX = 40;
-    public static final double MOB_CAPACITY_CONSTANT = 0.0000078125;
+    public static final int MOB_RESPAWN_TIME = Math.max(1, (int) (7 / ServerConfig.SPAWN_RATE));
+    public static final int MOB_CAPACITY_MAX = (int) (40 * ServerConfig.SPAWN_RATE);
+    public static final double MOB_CAPACITY_CONSTANT = 0.0000078125 * ServerConfig.SPAWN_RATE;
 
 
     // DROP CONSTANTS --------------------------------------------------------------------------------------------------
