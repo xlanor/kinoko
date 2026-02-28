@@ -1,0 +1,4 @@
+services:
+  database:
+    volumes:
+      - ./cassandra-data:/var/lib/cassandra
